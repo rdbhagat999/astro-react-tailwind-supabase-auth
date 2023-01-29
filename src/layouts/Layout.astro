@@ -1,0 +1,28 @@
+---
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body
+    class="container my-6 mx-auto max-w-lg font-sans text-base font-normal tracking-wide select-none text-gray-900 bg-gray-100 dark:text-gray-100 dark:bg-gray-900"
+  >
+    <slot />
+  </body>
+</html>
+<style is:global>
+  * {
+    box-sizing: border-box;
+  }
+</style>
