@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Country from "../components/Country.astro";
+
+import { getCountries } from "../lib/countries";
+
+const { countries } = await getCountries();
+---
+
+<Layout title="List of Countries">
+  <main>
+    <h1 class="text-3xl">List of <span class="italic">Countries</span></h1>
+
+    <ul
+      role="list"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"
+    >
+      {countries.map((c) => <Country country={c} />)}
+    </ul>
+  </main>
+</Layout>
