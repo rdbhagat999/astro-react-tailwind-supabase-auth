@@ -4,15 +4,22 @@ export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import App from "@components/App";
 
-import { getSession } from "@lib/auth_fns";
+import { setSessionData } from "@lib/auth_fns";
 
-const {
-  data: { session },
-} = await getSession();
+const refreshToken = Astro.cookies.get("my-refresh-token");
+const accessToken = Astro.cookies.get("my-access-token");
+
+// if (refreshToken?.value && accessToken?.value) {
+//   await setSessionData(refreshToken?.value, accessToken?.value);
+// } else {
+//   // make sure you handle this case!
+//   // throw new Error("User is not authenticated.");
+//   console.log("User is not authenticated.");
+// }
 ---
 
 <Layout title="Astro Auth with Supabase">
   <main>
-    <App client:load session_data={session} />
+    <App client:load />
   </main>
 </Layout>

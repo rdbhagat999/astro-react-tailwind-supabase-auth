@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithOtp } from "@lib/auth_fns";
+import { signInWithEmailLink } from "@lib/auth_fns";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ export default function Auth() {
 
     try {
       setLoading(true);
-      const { error } = await signInWithOtp(email);
+      const { error } = await signInWithEmailLink(email);
       if (error) throw error;
       alert("Check your email for the login link!");
     } catch (error: any) {
