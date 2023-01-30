@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { signInWithOtp } from "@lib/auth_fns";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -10,9 +10,7 @@ export default function Auth() {
 
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-      });
+      const { error } = await signInWithOtp(email);
       if (error) throw error;
       alert("Check your email for the login link!");
     } catch (error: any) {

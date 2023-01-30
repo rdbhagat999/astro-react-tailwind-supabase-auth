@@ -1,10 +1,10 @@
 ---
 export const prerender = true;
 
-import Layout from "../layouts/Layout.astro";
-import Country from "../components/Country.astro";
+import Layout from "@layouts/Layout.astro";
+import Country from "@components/Country.astro";
 
-import { getCountries } from "../lib/countries";
+import { getCountries } from "@lib/country_fns";
 
 const { countries } = await getCountries();
 ---

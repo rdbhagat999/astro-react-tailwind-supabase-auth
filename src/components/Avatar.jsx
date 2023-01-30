@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { fetchAvatarData, uploadAvtarData } from "@lib/avatar_fns";
 
 export default function Avatar({ url, size, onUpload }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -11,9 +11,7 @@ export default function Avatar({ url, size, onUpload }) {
 
   const downloadImage = async (path) => {
     try {
-      const { data, error } = await supabase.storage
-        .from("avatars")
-        .download(path);
+      const { data, error } = await fetchAvatarData(path);
       if (error) {
         throw error;
       }
@@ -39,9 +37,7 @@ export default function Avatar({ url, size, onUpload }) {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      let { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(filePath, file);
+      let { error: uploadError } = await uploadAvtarData(filePath, file);
 
       if (uploadError) {
         throw uploadError;

@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../lib/supabaseClient";
-import Account from "./Account";
-import Auth from "./Auth";
+import { supabase } from "@lib/supabaseClient";
+import { getSession } from "@lib/auth_fns";
+import Account from "@components/Account";
+import Auth from "@components/Auth";
 
 export default function App() {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    getSession().then(({ data: { session } }) => {
       setSession(session);
     });
 
@@ -18,11 +19,7 @@ export default function App() {
 
   return (
     <div className="container py-4 px-0">
-      {!session ? (
-        <Auth />
-      ) : (
-        <Account userId={session.user.id} session={session} />
-      )}
+      {!session ? <Auth /> : <Account session={session} />}
     </div>
   );
 }

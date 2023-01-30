@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../lib/supabaseClient";
-import Avatar from "./Avatar";
+import { signout } from "@lib/auth_fns";
+import { fetchProfileDataById, updateProfileData } from "@lib/profile_fns";
+import Avatar from "@components/Avatar";
 
-export default function Account({ userId, session }) {
+export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState(null);
   const [website, setWebsite] = useState(null);
@@ -18,11 +19,7 @@ export default function Account({ userId, session }) {
       const { user } = session;
       console.log("getProfile_user: ", user);
 
-      let { data, error, status } = await supabase
-        .from("profiles")
-        .select(`username, website, avatar_url`)
-        .eq("id", user.id)
-        .single();
+      let { data, error, status } = await fetchProfileDataById(user?.id);
 
       if (error && status !== 406) {
         throw error;
@@ -57,7 +54,7 @@ export default function Account({ userId, session }) {
         updated_at: new Date(),
       };
 
-      let { error } = await supabase.from("profiles").upsert(updates);
+      let { error } = await updateProfileData(updates);
 
       if (error) {
         throw error;
@@ -120,7 +117,7 @@ export default function Account({ userId, session }) {
       <button
         type="button"
         className="block mt-8 px-3 py-2 w-full text-white border rounded hover:border-2"
-        onClick={() => supabase.auth.signOut()}
+        onClick={() => signout()}
       >
         Sign Out
       </button>
