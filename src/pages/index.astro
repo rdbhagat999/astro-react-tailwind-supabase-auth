@@ -3,10 +3,16 @@ export const prerender = true;
 
 import Layout from "@layouts/Layout.astro";
 import App from "@components/App";
+
+import { getSession } from "@lib/auth_fns";
+
+const {
+  data: { session },
+} = await getSession();
 ---
 
 <Layout title="Astro Auth with Supabase">
   <main>
-    <App client:load />
+    <App client:load session_data={session} />
   </main>
 </Layout>

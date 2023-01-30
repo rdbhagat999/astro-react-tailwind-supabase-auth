@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@lib/supabaseClient";
-import { getSession } from "@lib/auth_fns";
+
 import Account from "@components/Account";
 import Auth from "@components/Auth";
 
-export default function App() {
-  const [session, setSession] = useState(null);
+export default function App({ session_data }) {
+  const [session, setSession] = useState(session_data);
 
   useEffect(() => {
-    getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
