@@ -15,6 +15,12 @@ export async function setSessionData(
   return await supabase.auth.setSession({ refresh_token, access_token });
 }
 
+export async function signInWithGitHub() {
+  return await supabase.auth.signInWithOAuth({
+    provider: "github",
+  });
+}
+
 export async function signout() {
   await supabase.auth.signOut();
 }

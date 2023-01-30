@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithEmailLink } from "@lib/auth_fns";
+import { signInWithEmailLink, signInWithGitHub } from "@lib/auth_fns";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -31,22 +31,35 @@ export default function Auth() {
         {loading ? (
           <p className="mt-2 mb-6">Sending magic link...</p>
         ) : (
-          <form onSubmit={handleLogin}>
-            <input
-              id="email"
-              className="px-3 py-2 w-full rounded text-gray-100 bg-gray-800"
-              type="email"
-              placeholder="Your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <>
+            <form className="block" onSubmit={handleLogin}>
+              <input
+                id="email"
+                className="px-3 py-2 w-full rounded text-gray-100 bg-gray-800"
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <button
+                className="block mt-8 px-3 py-2 w-full text-white border rounded hover:border-2"
+                aria-live="polite"
+              >
+                Send magic link
+              </button>
+            </form>
+
+            <hr className="bg-gray-500 mt-16" />
+
             <button
               className="block mt-8 px-3 py-2 w-full text-white border rounded hover:border-2"
               aria-live="polite"
+              type="button"
+              onClick={signInWithGitHub}
             >
-              Send magic link
+              SignIn with Github
             </button>
-          </form>
+          </>
         )}
       </div>
     </div>
