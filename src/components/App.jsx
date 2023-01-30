@@ -5,9 +5,11 @@ import Account from "@components/Account";
 import Auth from "@components/Auth";
 
 export default function App({ session_data }) {
-  const [session, setSession] = useState(session_data);
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
+    setSession(session_data);
+
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
